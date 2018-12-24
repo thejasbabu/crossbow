@@ -1,0 +1,9 @@
+apiVersion: crossbow.jazz.io/v1beta1
+kind: FullStack
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: fullstack-sample
+spec:  
+  namespace: dummy
+  appName: testFullStack
