@@ -17,16 +17,42 @@ limitations under the License.
 package v1beta1
 
 import (
+	appsv1 "k8s.io/api/apps/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+type Selector struct {
+	AppName string `json:"appName"`
+}
+
+type Metadata struct {
+	Name        string            `json:"name"`
+	Namespace   string            `json:"namespace"`
+	Labels      map[string]string `json:"labels,omitempty"`
+	Annotations map[string]string `json:"annotations,omitempty"`
+}
+
+type Template struct {
+	Metadata Metadata       `json:"metadata"`
+	PodSpec  corev1.PodSpec `json:"podSpec"`
+}
+
+type Deployment struct {
+	Replicas int32                     `json:"replicas,omitempty"`
+	Selector Selector                  `json:"selector"`
+	Template Template                  `json:"template"`
+	Strategy appsv1.DeploymentStrategy `json:"strategy,omitempty"`
+	Metadata Metadata                  `json:"metadata"`
+}
 
 // FullStackSpec defines the desired state of FullStack
 type FullStackSpec struct {
-	Namespace string `json:"namespace"`
-	AppName   string `json:"appName"`
+	Namespace  string     `json:"namespace"`
+	AppName    string     `json:"appName"`
+	Deployment Deployment `json:"deployment"`
 }
 
 // FullStackStatus defines the observed state of FullStack

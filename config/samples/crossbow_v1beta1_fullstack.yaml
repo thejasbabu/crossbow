@@ -3,7 +3,22 @@ kind: FullStack
 metadata:
   labels:
     controller-tools.k8s.io: "1.0"
-  name: fullstack-sample
-spec:
-  # Add fields here
-  foo: bar
+  name: test-fullstack
+spec:  
+  namespace: kube-system
+  appName: test-fullstack
+  deployment: 
+    replicas: 2
+    metadata:
+        name: "test-fullstack"
+        namespace: "kube-system"
+    selector: 
+      appName: "test-fullstack"
+    template:
+      metadata:
+        name: "test-fullstack"
+        namespace: "kube-system"
+      podSpec:
+        containers:
+          - name: "fullstack"
+            image: "coscale/docker-sleep"
